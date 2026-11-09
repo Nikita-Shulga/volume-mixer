@@ -10,6 +10,12 @@ macOS only has one system-wide volume. Volume Mixer sits in the menu bar (top ri
 
 Settings are remembered per app, so a muted app stays muted after it restarts.
 
+## Download
+
+[Download the latest version](https://github.com/Nikita-Shulga/volume-mixer/releases/latest) (`VolumeMixer-1.0-mac-universal.zip`). One app for both Apple Silicon and Intel Macs, macOS 14.2 or later.
+
+Unzip it and drag **Volume Mixer** to Applications. The app isn't signed by Apple yet, so the first time you open it macOS blocks it: go to *System Settings → Privacy & Security* and click *Open Anyway*. If macOS says the app is damaged, run `xattr -cr "/Applications/Volume Mixer.app"` once.
+
 ## Which apps are listed
 
 - Open apps that have registered with the macOS audio system (Core Audio)
@@ -82,3 +88,7 @@ prints the apps Volume Mixer currently lists.
 
 - When a lowered app starts playing, there can be a very short moment of silence while its audio path starts.
 - Apps that spawn a new audio process right as they start playing may be briefly heard at full volume until the new process is picked up.
+
+## License
+
+MIT. See [LICENSE](LICENSE).

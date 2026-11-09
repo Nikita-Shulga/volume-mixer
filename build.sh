@@ -8,10 +8,15 @@ rm -rf "$APP"
 mkdir -p "$APP/Contents/MacOS" "$APP/Contents/Resources" build
 
 echo "Compiling…"
-swiftc -O -swift-version 5 \
-    -target "$(uname -m)-apple-macos14.2" \
-    -framework AppKit -framework SwiftUI -framework CoreAudio -framework ServiceManagement \
-    Sources/*.swift -o "$APP/Contents/MacOS/VolumeMixer"
+# Universal binary, so the same app runs on Apple Silicon and Intel Macs.
+for ARCH in arm64 x86_64; do
+    swiftc -O -swift-version 5 \
+        -target "$ARCH-apple-macos14.2" \
+        -framework AppKit -framework SwiftUI -framework CoreAudio -framework ServiceManagement \
+        Sources/*.swift -o "build/VolumeMixer-$ARCH"
+done
+lipo -create build/VolumeMixer-arm64 build/VolumeMixer-x86_64 -output "$APP/Contents/MacOS/VolumeMixer"
+rm build/VolumeMixer-arm64 build/VolumeMixer-x86_64
 
 cp Info.plist "$APP/Contents/Info.plist"
 
